@@ -7,6 +7,10 @@ public class LevelManager : MonoBehaviour {
     // needs to to access the one and only LevelManager object by going LevelManager.instance.
     public static LevelManager instance;
 
+    private Animation anim; //calling animation function
+
+    
+
 	// Okay, what objects does the LevelManager need to be connected to. I'll start you off
     // and say the LevelManager needs to be connected to the SwitchController script on the
     // Switch game object so that it can call the turnOn() and turnOff() functions on it when
@@ -35,6 +39,8 @@ public class LevelManager : MonoBehaviour {
     // goes into this function that will (a) if the switch is enabled will turn it on if it is off and
     // push the Vase off the ledge and (b) if the switch is enabled will turn it off if it is on.
 	public void flipTheSwitch() {
+
+        anim.animation.Play("switchoff");
 		
 	}
 
