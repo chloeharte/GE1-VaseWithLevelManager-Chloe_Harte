@@ -9,28 +9,43 @@ public class LevelManager : MonoBehaviour {
 
     private Animation anim; //calling animation function
 
-    
 
-	// Okay, what objects does the LevelManager need to be connected to. I'll start you off
+
+    
+    // Okay, what objects does the LevelManager need to be connected to. I'll start you off
     // and say the LevelManager needs to be connected to the SwitchController script on the
     // Switch game object so that it can call the turnOn() and turnOff() functions on it when
     // the user presses the spacebar AND the switch is enabled (which is done by moving the
     // Hero beside the Switch).
 
-	// The SwitchController
-	public SwitchController theSwitch;
+    // The SwitchController
+    public SwitchController theSwitch;
+
+
+
+    public Rigidbody2D rb;
+    public bool CanFlip = false;
+    public float thrust;
+  
+ 
+    
 
     private void Awake()
     {
         instance = this;
+      
+
     }
     // Use this for initialization
     void Start () {
-	
+        
+        CanFlip = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        
 	
 	}
 
@@ -40,19 +55,36 @@ public class LevelManager : MonoBehaviour {
     // push the Vase off the ledge and (b) if the switch is enabled will turn it off if it is on.
 	public void flipTheSwitch() {
 
-        anim.animation.Play("switchoff");
-		
+		if (Input.GetKeyDown(KeyCode.Space) && CanFlip == true)
+        {
+            theSwitch.turnOn();
+            rb.AddForce(Vector2.right * thrust);
+
+        }
+        else
+        {
+            theSwitch.turnOff();
+        }
+       
 	}
 
     // The following two functions get called by the SwitchController object when the Hero enters the 
     // trigger box of the Switch. You need to write the code that goes into these functions.
     public void onSwitchTriggerEnter(Collider2D other)
     {
+      
+            if(other.gameObject.tag =="Player")
+        {
+            CanFlip = true;
+        } 
 
+      
     }
 
     public void onSwitchTriggerExit(Collider2D other)
     {
-        
+        theSwitch.turnOff();
+        CanFlip = false;
+      
     }
 }
